@@ -1,0 +1,28 @@
+# 성능 테스트 설정 파일
+
+# 웹캠 설정 (고해상도)
+webcam:
+  resolution:
+    width: 1280
+    height: 720
+  fps: 30
+
+# 프레임 처리기 설정
+frame_processor:
+  performance:
+    enable_resize: true
+    processing_width: 640
+    processing_height: 480
+    display_fps_limit: 60
+
+# 파이프라인 설정
+pipeline:
+  async_mode: true  # 성능 테스트에서는 비동기 모드
+
+# 저장 설정
+storage:
+  compression_quality: 95  # 높은 품질
+
+# 로깅 설정
+logging:
+  level: WARNING  # 성능 측정 시 로깅 최소화

@@ -1,0 +1,57 @@
+# 분석 파이프라인 설정 파일
+
+# 웹캠 설정
+webcam:
+  camera_id: 0  # 웹캠 장치 ID
+  resolution:
+    width: 640
+    height: 480
+  fps: 15  # 초당 프레임 수
+
+# 프레임 처리기 설정
+frame_processor:
+  queue_size: 5  # 프레임 큐 크기
+  queue_policy: discard_oldest  # 큐 정책 (discard_oldest 또는 block)
+  skip_frames: 1  # 처리할 때 건너뛸 프레임 수
+  performance:
+    enable_resize: true  # 프레임 리사이징 활성화 여부
+    processing_width: 480  # 처리용 프레임 너비
+    processing_height: 360  # 처리용 프레임 높이
+    display_fps_limit: 30  # 화면 표시 FPS 제한
+
+# 파이프라인 설정
+pipeline:
+  async_mode: false  # 비동기 처리 모드 사용 여부
+  cache_size: 50  # 처리된 프레임 캐시 크기
+  handlers:
+    preprocess:
+      enabled: true  # 전처리 활성화 여부
+    analysis:
+      simple_metrics:
+        enabled: true  # 단순 측정 지표 분석 활성화
+      object_detection:
+        enabled: true  # 객체 검출 분석 활성화
+        min_area_percent: 1.0  # 객체로 인식할 최소 영역 비율 (%)
+        threshold: 50  # 경계값 (Canny 엣지 검출용)
+    postprocess:
+      visualization:
+        enabled: true  # 시각화 활성화 여부
+
+# 저장 설정
+storage:
+  compression_quality: 85  # JPEG 압축 품질 (0-100)
+  max_disk_usage_gb: 1.0  # 최대 디스크 사용량 (GB)
+  cleanup_threshold_gb: 0.8  # 정리 임계값 (GB)
+  metadata_format: json  # 메타데이터 저장 형식 (json 또는 exif)
+  auto_save:
+    enabled: false  # 자동 저장 활성화 여부
+    interval_sec: 30  # 자동 저장 간격 (초)
+
+# UI 설정
+ui:
+  display_options:
+    show_metrics: true  # 측정 지표 표시
+    show_objects: true  # 객체 검출 표시
+    show_bboxes: true  # 바운딩 박스 표시
+    show_performance: true  # 성능 정보 표시
+  stats_interval_sec: 5.0  # 통계 정보 출력 간격 (초)

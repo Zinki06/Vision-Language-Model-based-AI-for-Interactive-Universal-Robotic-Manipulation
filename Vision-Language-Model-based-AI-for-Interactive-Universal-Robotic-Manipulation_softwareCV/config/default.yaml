@@ -1,0 +1,101 @@
+# 기본 설정 파일
+
+# 카메라 설정
+camera:
+  device_id: 0  # 카메라 장치 ID (0: 내장 웹캠, 1,2...: 외부 웹캠)
+  device_type: "auto"  # 카메라 장치 타입 (auto, webcam, usb_webcam, avfoundation)
+  auto_detect: true  # 사용 가능한 카메라 자동 감지
+  width: 640
+  height: 480
+  fps: 30
+  initialization:
+    retry_count: 3  # 초기화 실패 시 재시도 횟수
+    stabilize_frames: 10  # 안정화를 위해 버릴 프레임 수
+    stabilize_delay: 0.1  # 안정화 프레임 간 지연 시간(초)
+  advanced:
+    brightness: -1       # -1은 자동 설정 (카메라마다 범위 다름)
+    contrast: -1         # -1은 자동 설정
+    saturation: -1       # -1은 자동 설정
+    auto_focus: true     # 자동 초점 설정
+    auto_exposure: true  # 자동 노출 설정
+    flip_horizontal: false # 수평 대칭
+    flip_vertical: false   # 수직 대칭
+
+# 프레임 처리기 설정
+frame_processor:
+  queue_size: 5  # 프레임 큐 크기
+  queue_policy: discard_oldest  # 큐 정책 (discard_oldest 또는 block)
+  skip_frames: 1  # 처리할 때 건너뛸 프레임 수
+  threading:
+    priority: high
+    timeout: 0.01       # 타임아웃 더 짧게
+  performance:
+    enable_resize: true  # 프레임 리사이징 활성화 여부
+    processing_width: 320  # 처리용 프레임 너비
+    processing_height: 240  # 처리용 프레임 높이
+    display_fps_limit: 30  # 화면 표시 FPS 제한
+
+# 파이프라인 설정
+pipeline:
+  async_mode: false  # 비동기 처리 모드 사용 여부
+  cache_size: 50  # 처리된 프레임 캐시 크기
+
+# 저장 설정
+storage:
+  compression_quality: 85  # JPEG 압축 품질 (0-100)
+  max_disk_usage_gb: 1.0  # 최대 디스크 사용량 (GB)
+  cleanup_threshold_gb: 0.8  # 정리 임계값 (GB)
+  metadata_format: json  # 메타데이터 저장 형식 (json 또는 exif)
+  base_path: captures
+  output_dir: "output"
+  session_dir_format: "session_%Y%m%d_%H%M%S"
+  snapshot_format: "snapshot_%Y%m%d_%H%M%S.jpg"
+  result_format: "result_%Y%m%d_%H%M%S.jpg"
+  json_format: "result_%Y%m%d_%H%M%S.json"
+
+# 로깅 설정
+logging:
+  level: INFO            # 로그 레벨 (DEBUG, INFO, WARNING, ERROR, CRITICAL)
+  file: logs/app.log  # 로그 파일 경로
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+# Gemini API 설정
+gemini:
+  model: gemini-2.0-flash
+  max_retries: 3
+  retry_delay: 2
+  timeout: 30
+  max_tokens: 1024
+  temperature: 0.4
+  image_size: [512, 512]
+
+# 이미지 처리 설정
+image:
+  compression_quality: 85
+  processing_width: 512
+  processing_height: 512
+
+# 음성 녹음 설정
+audio:
+  enabled: true            # 음성 녹음 기능 활성화 여부
+  sample_rate: 44100       # 샘플링 레이트 (Hz)
+  channels: 1              # 채널 수 (1: 모노, 2: 스테레오)
+  chunk_size: 1024         # 청크 크기
+  format: paInt16          # 오디오 형식
+  mp3_quality: 192         # MP3 품질 (kbps)
+  max_duration: 60         # 최대 녹음 시간 (초, 0은 무제한)
+  timeout: 1.0             # 녹음 관련 작업 타임아웃 (초)
+  silence_threshold: 0.05  # 무음 감지 임계값 (0.0 ~ 1.0)
+  auto_stop_silence: false # 무음 감지 시 자동 종료
+  auto_trim_silence: false # 시작과 끝의 무음 자동 제거
+
+# STT (Speech-to-Text) 설정
+stt:
+  enabled: true            # STT 기능 활성화 여부
+  provider: "openai"       # STT 제공자 (openai)
+  language: "ko"           # 인식 언어 ("ko": 한국어, "en": 영어, "auto": 자동 감지)
+  model: "whisper-1"       # 모델 이름 (OpenAI Whisper API의 경우 "whisper-1")
+  max_retries: 3           # 최대 재시도 횟수
+  retry_delay: 1           # 재시도 간 지연 시간 (초)
+  timeout: 30              # API 호출 타임아웃 (초)
+  auto_analyze: true       # 음성 인식 후 자동 분석 실행 여부 (프롬프트로 설정)

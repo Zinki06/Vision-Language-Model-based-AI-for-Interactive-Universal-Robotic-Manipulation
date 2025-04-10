@@ -1,0 +1,29 @@
+# 테스트 환경 설정 파일
+
+# 웹캠 설정 (테스트용)
+webcam:
+  camera_id: 0
+  resolution:
+    width: 320
+    height: 240
+  fps: 15
+
+# 프레임 처리기 설정
+frame_processor:
+  skip_frames: 0  # 테스트에서는 프레임 스킵 없음
+
+# 파이프라인 설정
+pipeline:
+  async_mode: false  # 테스트에서는 동기 모드 사용
+
+# 저장 설정
+storage:
+  compression_quality: 75  # 테스트에서는 낮은 품질
+  max_disk_usage_gb: 0.2
+  cleanup_threshold_gb: 0.15
+  base_path: test_captures  # 테스트용 별도 저장 경로
+
+# 로깅 설정
+logging:
+  level: INFO
+  file: logs/test.log
