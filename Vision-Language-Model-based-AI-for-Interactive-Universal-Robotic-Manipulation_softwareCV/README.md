@@ -1,4 +1,4 @@
-# LLM2PF6: LLM 기반 객체 인식 및 제스처 기반 타겟 객체 추론 시스템
+# Vision-Language-Model-based-AI-for-Interactive-Universal-Robotic-Manipulation_softwareCV: LLM 기반 객체 인식 및 제스처 기반 타겟 객체 추론 시스템
 
 이 프로젝트는 컴퓨터 비전과 대규모 언어 모델(LLM)을 결합하여, **사용자의 모호한 지시어와 손 제스처를 기반으로 목표 물체(타겟)를 식별**하고, 해당 **목표 위치**를 3D/2D로 추론하는 시스템을 제공합니다.
 
